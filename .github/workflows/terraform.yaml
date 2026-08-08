@@ -30,9 +30,9 @@ jobs:
         uses: azure/login@v1
         with:
           clientId: "3050f33b-e253-4ddd-ba25-a30158c6d653"
-          clientSecret: "~Vm8Q~n5aaJ5GpV.s4xaOkOuH2_wCwhVoUfayddu"
-          subscriptionId: "af61473b-449e-4740-a263-451ee84197a7"
           tenantId: "9717e559-4d76-42f9-af57-c872325ab987"
+          subscriptionId: "af61473b-449e-4740-a263-451ee84197a7"
+          clientSecret: "~Vm8Q~n5aaJ5GpV.s4xaOkOuH2_wCwhVoUfayddu"
             
 
       # Step 4: Terraform Init
