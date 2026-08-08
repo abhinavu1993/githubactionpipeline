@@ -21,18 +21,14 @@ jobs:
         with:
           terraform_version: 1.6.0   # apne project ke hisaab se
 
-      # Step 3: Azure Login
+      # Step 3: Azure Login using secrets
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          # AZURE_CREDENTIALS ek JSON secret hoga:
-          # {
-          #   "clientId": "...",
-          #   "clientSecret": "...",
-          #   "subscriptionId": "...",
-          #   "tenantId": "..."
-          # }
+          client-id: "3050f33b-e253-4ddd-ba25-a30158c6d653"
+          tenant-id: "3050f33b-e253-4ddd-ba25-a30158c6d653"
+          subscription-id: "af61473b-449e-4740-a263-451ee84197a7"
+          client-secret: "~Vm8Q~n5aaJ5GpV.s4xaOkOuH2_wCwhVoUfayddu"
 
       # Step 4: Terraform Init
       - name: Terraform Init
