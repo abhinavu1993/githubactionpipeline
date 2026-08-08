@@ -1,0 +1,49 @@
+name: Terraform CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - feature/*   # Feature branches → Plan
+      - main        # Main branch → Apply
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0   # apne project ke hisaab se
+
+      # Step 3: Azure Login
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          # AZURE_CREDENTIALS ek JSON secret hoga:
+          # {
+          #   "clientId": "...",
+          #   "clientSecret": "...",
+          #   "subscriptionId": "...",
+          #   "tenantId": "..."
+          # }
+
+      # Step 4: Terraform Init
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 5: Terraform Plan (Feature branch only)
+      - name: Terraform Plan
+        if: startsWith(github.ref, 'refs/heads/feature/')
+        run: terraform plan
+
+      # Step 6: Terraform Apply (Main branch only)
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
